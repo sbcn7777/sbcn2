@@ -2,10 +2,13 @@
 
 import { useState } from 'react'
 import { Bell, Menu, Search, Wallet, ChevronDown } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { getNavItem } from '@/lib/nav'
 
 export function TopBar({ onMenuClick }: { onMenuClick: () => void }) {
   const [connected, setConnected] = useState(true)
+  const page = getNavItem(usePathname())
 
   return (
     <header className="sticky top-0 z-30 flex h-20 items-center gap-4 border-b border-border bg-background/70 px-4 backdrop-blur-xl md:px-8">
@@ -19,10 +22,8 @@ export function TopBar({ onMenuClick }: { onMenuClick: () => void }) {
       </button>
 
       <div className="min-w-0">
-        <h1 className="truncate text-xl font-bold tracking-tight md:text-2xl">Investor Dashboard</h1>
-        <p className="hidden text-xs text-muted-foreground sm:block">
-          Track your Genesis NFTs, yield and affiliate earnings
-        </p>
+        <h1 className="truncate text-xl font-bold tracking-tight md:text-2xl">{page.title}</h1>
+        <p className="hidden text-xs text-muted-foreground sm:block">{page.description}</p>
       </div>
 
       <div className="ml-auto flex items-center gap-2 md:gap-3">

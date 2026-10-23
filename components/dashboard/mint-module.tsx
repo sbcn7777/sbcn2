@@ -1,20 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { Sparkles, CheckCircle2, Circle, Loader2, ShieldCheck } from 'lucide-react'
+import Image from 'next/image'
+import { Sparkles, CheckCircle2, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { GlassCard, CardHeading } from './glass-card'
 import { cn } from '@/lib/utils'
 
 const TOTAL_SUPPLY = 500
 const PRICE = 500
-
-const requirements = [
-  { label: 'Hold at least 1 SabaFi Presale NFT', progress: '1 / 1', done: true },
-  { label: 'Refer 3 active players', progress: '2 / 3', done: false },
-  { label: 'Generate 10,000 USDC referred volume', progress: '45,200 USDC — target reached', done: true },
-  { label: '30-day holding period', progress: '21 / 30 days', done: false },
-]
 
 type Step = 'idle' | 'approving' | 'approved' | 'minting'
 
@@ -23,7 +17,6 @@ export function MintModule() {
   const [step, setStep] = useState<Step>('idle')
 
   const pct = (minted / TOTAL_SUPPLY) * 100
-  const doneCount = requirements.filter((r) => r.done).length
 
   const approve = () => {
     setStep('approving')
@@ -131,33 +124,16 @@ export function MintModule() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-background/40 p-4 lg:col-span-2">
-          <div className="flex items-center justify-between">
-            <h3 className="flex items-center gap-2 text-sm font-semibold">
-              <ShieldCheck className="size-4 text-primary" />
-              Unlock Condition Tracker
-            </h3>
-            <span className="font-mono text-xs text-muted-foreground">
-              {doneCount}/{requirements.length}
-            </span>
-          </div>
-          <ul className="mt-4 flex flex-col gap-3">
-            {requirements.map((r) => (
-              <li key={r.label} className="flex items-start gap-2.5">
-                {r.done ? (
-                  <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-success" aria-label="Completed" />
-                ) : (
-                  <Circle className="mt-0.5 size-4 shrink-0 text-destructive" aria-label="Pending" />
-                )}
-                <div className="min-w-0">
-                  <p className={cn('text-sm', r.done ? 'text-foreground' : 'text-secondary-foreground')}>
-                    {r.label}
-                  </p>
-                  <p className="font-mono text-xs text-muted-foreground">{r.progress}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-xl border border-primary/20 bg-[radial-gradient(80%_80%_at_50%_30%,rgb(255_230_0/0.14),transparent_70%)] p-6 lg:col-span-2">
+          <Image
+            src="/sabafi-logo.png"
+            alt="Genesis Investor Pass artwork"
+            width={160}
+            height={160}
+            className="rounded-2xl border border-primary/30 shadow-[0_0_48px_-8px_rgb(255_230_0/0.6)]"
+          />
+          <p className="mt-4 text-sm font-semibold text-foreground">Genesis Investor Pass</p>
+          <p className="font-mono text-xs text-muted-foreground">Next mint: #{minted + 1}</p>
         </div>
       </div>
     </GlassCard>

@@ -1,22 +1,11 @@
-import Image from 'next/image'
-import {
-  LayoutDashboard,
-  Gem,
-  Store,
-  Users,
-  LineChart,
-  X,
-  Activity,
-} from 'lucide-react'
-import { cn } from '@/lib/utils'
+'use client'
 
-const navItems = [
-  { label: 'Dashboard', icon: LayoutDashboard, href: '#', active: true },
-  { label: 'NFT Presale & Vault', icon: Gem, href: '#mint' },
-  { label: 'Marketplace', icon: Store, href: '#marketplace' },
-  { label: 'Affiliate & Ref', icon: Users, href: '#affiliate' },
-  { label: 'Analytics / Yield', icon: LineChart, href: '#' },
-]
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { X, Activity } from 'lucide-react'
+import { navItems } from '@/lib/nav'
+import { cn } from '@/lib/utils'
 
 export function AppSidebar({
   open,
@@ -25,6 +14,8 @@ export function AppSidebar({
   open: boolean
   onClose: () => void
 }) {
+  const pathname = usePathname()
+
   return (
     <>
       <div
@@ -43,7 +34,7 @@ export function AppSidebar({
         )}
       >
         <div className="flex h-20 items-center justify-between gap-3 border-b border-border px-5">
-          <a href="#" className="flex items-center gap-3" aria-label="SabaFi home">
+          <Link href="/" onClick={onClose} className="flex items-center gap-3" aria-label="SabaFi home">
             <Image
               src="/sabafi-logo.png"
               alt=""
@@ -58,7 +49,7 @@ export function AppSidebar({
                 Safe Betting &amp; Double Profit
               </span>
             </div>
-          </a>
+          </Link>
           <button
             type="button"
             onClick={onClose}
@@ -74,35 +65,38 @@ export function AppSidebar({
             Menu
           </p>
           <ul className="flex flex-col gap-1">
-            {navItems.map(({ label, icon: Icon, href, active }) => (
-              <li key={label}>
-                <a
-                  href={href}
-                  onClick={onClose}
-                  aria-current={active ? 'page' : undefined}
-                  className={cn(
-                    'group relative flex h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors',
-                    active
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',
-                  )}
-                >
-                  {active && (
-                    <span
-                      aria-hidden
-                      className="absolute inset-y-2 left-0 w-1 rounded-r-full bg-primary shadow-[0_0_12px_rgb(255_230_0/0.8)]"
-                    />
-                  )}
-                  <Icon
+            {navItems.map(({ label, icon: Icon, href }) => {
+              const active = pathname === href
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    onClick={onClose}
+                    aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'size-[18px]',
-                      active ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground',
+                      'group relative flex h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium transition-colors',
+                      active
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:bg-secondary/70 hover:text-foreground',
                     )}
-                  />
-                  {label}
-                </a>
-              </li>
-            ))}
+                  >
+                    {active && (
+                      <span
+                        aria-hidden
+                        className="absolute inset-y-2 left-0 w-1 rounded-r-full bg-primary shadow-[0_0_12px_rgb(255_230_0/0.8)]"
+                      />
+                    )}
+                    <Icon
+                      className={cn(
+                        'size-[18px]',
+                        active ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground',
+                      )}
+                    />
+                    {label}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
         </nav>
 
