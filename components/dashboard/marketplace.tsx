@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Store, ArrowDownRight, ArrowUpRight, Lock, Unlock } from 'lucide-react'
+import { Store, ArrowDownRight, ArrowUpRight, Lock, Unlock, Zap } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { GlassCard, CardHeading } from './glass-card'
 import { cn } from '@/lib/utils'
@@ -37,11 +37,33 @@ export function Marketplace() {
     <GlassCard className="flex flex-col p-6">
       <CardHeading
         icon={<Store className="size-4" />}
-        title="NFT Marketplace"
-        description="In-house quick listing"
+        title="In-house Saba Marketplace"
+        description="Quick listing for Genesis Passes"
       />
 
-      <div className="mt-5 grid grid-cols-3 gap-2">
+      <div className="mt-5 rounded-xl border border-primary/25 bg-[linear-gradient(135deg,rgb(255_230_0/0.10),rgb(255_230_0/0.02)_60%,transparent)] p-4">
+        <div className="flex items-center justify-between">
+          <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+            <Zap className="size-3.5" aria-hidden />
+            Instant Buy
+          </p>
+          <span className="text-[11px] text-muted-foreground">Cheapest unlocked</span>
+        </div>
+        <div className="mt-3 flex items-end justify-between gap-3">
+          <div>
+            <p className="text-sm font-medium">Genesis Pass #{buyListings[0].id}</p>
+            <p className="mt-0.5 font-mono text-2xl font-bold text-foreground">
+              {buyListings[0].price}
+              <span className="ml-1 text-xs font-medium text-muted-foreground">USDC</span>
+            </p>
+          </div>
+          <Button className="h-10 rounded-xl px-5 font-semibold hover:bg-primary/90">
+            Buy Now
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-4 grid grid-cols-3 gap-2">
         {[
           { k: 'Floor', v: `${FLOOR}` },
           { k: '24h Vol', v: '12.4K' },

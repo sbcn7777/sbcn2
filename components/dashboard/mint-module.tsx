@@ -42,7 +42,7 @@ export function MintModule() {
     <GlassCard className="overflow-hidden p-6">
       <CardHeading
         icon={<Sparkles className="size-4" />}
-        title="Presale NFT Mint"
+        title="Genesis Presale NFT Mint Box"
         description="Genesis Investor Pass — earns a share of platform betting yield."
         action={
           <span className="inline-flex items-center gap-1.5 rounded-full border border-destructive/30 bg-destructive/10 px-2.5 py-1 text-xs font-semibold text-destructive">
